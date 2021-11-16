@@ -7,7 +7,7 @@ function App() {
     <>
       <Navbar title="WordApp" aboutText="About Us" />
       <div className="container my-3">
-        <TextForm heading="Enter text to analyze"/>
+        <TextForm heading="Enter text to analyze" />
       </div>
     </>
   );
