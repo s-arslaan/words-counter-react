@@ -27,9 +27,14 @@ export default function TextForm(props) {
 
       // word[0] will be uppercase, rest alphabets will be lowercase, plus space
       newText += word[0].toUpperCase() + word.slice(1).toLowerCase() + space;
-      
     });
     setText(newText);
+  };
+
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(text);
+    // let newText = "";
+    // setText(newText);
   };
 
   const handleClearClick = () => {
@@ -73,6 +78,12 @@ export default function TextForm(props) {
           onClick={handleCapitalizeClick}
         >
           Capitalize
+        </button>
+        <button
+          className="btn btn-secondary mx-2 my-1"
+          onClick={handleCopyClick}
+        >
+          Copy
         </button>
         <button className="btn btn-dark mx-2 my-1" onClick={handleClearClick}>
           Clear
