@@ -7,11 +7,13 @@ export default function TextForm(props) {
     // console.log("uppercase clicked!\nTEXT:: " + text);
     let newText = text.toUpperCase();
     setText(newText);
+    props.showAlert("Converted to Uppercase", "success");
   };
 
   const handleLowerClick = () => {
     let newText = text.toLowerCase();
     setText(newText);
+    props.showAlert("Converted to Lowercase", "success");
   };
 
   const handleCapitalizeClick = () => {
@@ -20,19 +22,16 @@ export default function TextForm(props) {
 
     // if there is space at end of string, word[0] becomes undefined
     arr.forEach((word, index) => {
-      let space = " ";
-      if (index === arr.length - 1) {
-        space = "";
-      }
-
       // word[0] will be uppercase, rest alphabets will be lowercase, plus space
-      newText += word[0].toUpperCase() + word.slice(1).toLowerCase() + space;
+      newText += word[0].toUpperCase() + word.slice(1).toLowerCase() + " ";
     });
-    setText(newText);
+    setText(newText.trim());
+    props.showAlert("Capitalized every word", "success");
   };
 
   const handleCopyClick = () => {
     navigator.clipboard.writeText(text);
+    props.showAlert("Copied to clipboard", "success");
     // let newText = "";
     // setText(newText);
   };
@@ -49,7 +48,11 @@ export default function TextForm(props) {
 
   return (
     <>
-      <div className="container">
+      {/* in style= '{'--first curly for JS '{' --second curly for OBJECT }} */}
+      <div
+        className="container"
+        style={{ color: props.mode === "light" ? "black" : "white" }}
+      >
         <h2>{props.heading}</h2>
         <div className="mb-3">
           <textarea
@@ -59,6 +62,10 @@ export default function TextForm(props) {
             onChange={handleOnChange}
             id="myBox"
             rows="9"
+            style={{
+              backgroundColor: props.mode === "light" ? "white" : "#282C34",
+              color: props.mode === "light" ? "black" : "white",
+            }}
           ></textarea>
         </div>
         <button
@@ -77,7 +84,7 @@ export default function TextForm(props) {
           className="btn btn-warning mx-2 my-1"
           onClick={handleCapitalizeClick}
         >
-          Capitalize
+          <b>Capitalize</b>
         </button>
         <button
           className="btn btn-secondary mx-2 my-1"
@@ -88,16 +95,29 @@ export default function TextForm(props) {
         <button className="btn btn-dark mx-2 my-1" onClick={handleClearClick}>
           Clear
         </button>
-      </div>
-      <div className="container my-3">
-        <h2>Your text Summary</h2>
+        <h2 className="my-3">Your text Summary</h2>
         <p>
-          {text.split(" ").length} words &amp; {text.length} characters
+          {/* {text.length>0? text.split(" ").length : '0'} words  */}
+          {
+            text
+              .trim()
+              .split(" ")
+              .filter(function (element) {
+                return element != "";
+              }).length
+          }{" "}
+          words &amp; {text.length} characters
           <br />
-          {0.008 * text.split(" ").length} Minutes read
+          {text
+            .trim()
+            .split(" ")
+            .filter(function (element) {
+              return element != "";
+            }).length * 0.008}{" "}
+          Minutes read
         </p>
         <h3>Preview</h3>
-        <p>{text}</p>
+        <p>{text.length > 0 ? text : "Enter your text to preview here..."}</p>
       </div>
     </>
   );
