@@ -103,7 +103,7 @@ export default function TextForm(props) {
               .trim()
               .split(" ")
               .filter(function (element) {
-                return element != "";
+                return element !== "";
               }).length
           }{" "}
           words &amp; {text.length} characters
@@ -112,7 +112,7 @@ export default function TextForm(props) {
             .trim()
             .split(" ")
             .filter(function (element) {
-              return element != "";
+              return element !== "";
             }).length * 0.008}{" "}
           Minutes read
         </p>
