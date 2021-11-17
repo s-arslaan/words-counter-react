@@ -5,35 +5,53 @@ export default function TextForm(props) {
 
   const handleUpperClick = () => {
     // console.log("uppercase clicked!\nTEXT:: " + text);
-    let newText = text.toUpperCase();
-    setText(newText);
-    props.showAlert("Converted to Uppercase", "success");
+    if (text.length>0) {
+      let newText = text.toUpperCase();
+      setText(newText);
+      props.showAlert("Converted to Uppercase", "success");
+    } else {
+      props.showAlert("Enter text first", "danger");
+    }
   };
 
   const handleLowerClick = () => {
-    let newText = text.toLowerCase();
-    setText(newText);
-    props.showAlert("Converted to Lowercase", "success");
+    if (text.length>0) {
+      
+      let newText = text.toLowerCase();
+      setText(newText);
+      props.showAlert("Converted to Lowercase", "success");
+    } else {
+      props.showAlert("Enter text first", "danger");
+    }
   };
 
   const handleCapitalizeClick = () => {
-    let arr = text.split(" ");
-    let newText = "";
+    if(text.length>0) {
 
-    // if there is space at end of string, word[0] becomes undefined
-    arr.forEach((word, index) => {
-      // word[0] will be uppercase, rest alphabets will be lowercase, plus space
-      newText += word[0].toUpperCase() + word.slice(1).toLowerCase() + " ";
-    });
-    setText(newText.trim());
-    props.showAlert("Capitalized every word", "success");
+      let arr = text.split(" ");
+      let newText = "";
+  
+      // if there is space at end of string, word[0] becomes undefined
+      arr.forEach((word, index) => {
+        // word[0] will be uppercase, rest alphabets will be lowercase, plus space
+        newText += word[0].toUpperCase() + word.slice(1).toLowerCase() + " ";
+      });
+      setText(newText.trim());
+      props.showAlert("Capitalized every word", "success");
+    } else {
+      props.showAlert("Enter text first", "danger");
+    }
   };
 
   const handleCopyClick = () => {
-    navigator.clipboard.writeText(text);
-    props.showAlert("Copied to clipboard", "success");
-    // let newText = "";
-    // setText(newText);
+    if (text.length>0) {
+      // text.select();
+      // text.setSelectionRange(0, 99999); /* For mobile devices */
+      navigator.clipboard.writeText(text);
+      props.showAlert("Copied to clipboard", "success");
+    } else {
+      props.showAlert("Enter text first", "danger");
+    }
   };
 
   const handleClearClick = () => {
