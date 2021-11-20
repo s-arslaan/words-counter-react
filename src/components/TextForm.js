@@ -121,7 +121,7 @@ export default function TextForm(props) {
               .trim()
               .split(" ")
               .filter(function (element) {
-                return element !== "";
+                return element.length !== 0;
               }).length
           }{" "}
           words &amp; {text.length} characters
