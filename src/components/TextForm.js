@@ -9,8 +9,6 @@ export default function TextForm(props) {
       let newText = text.trim().toUpperCase();
       setText(newText);
       props.showAlert("Converted to Uppercase", "success");
-    } else {
-      props.showAlert("Enter text first", "danger");
     }
   };
 
@@ -20,8 +18,6 @@ export default function TextForm(props) {
       let newText = text.trim().toLowerCase();
       setText(newText);
       props.showAlert("Converted to Lowercase", "success");
-    } else {
-      props.showAlert("Enter text first", "danger");
     }
   };
 
@@ -38,8 +34,23 @@ export default function TextForm(props) {
       });
       setText(newText.trim());
       props.showAlert("Capitalized every word", "success");
-    } else {
-      props.showAlert("Enter text first", "danger");
+    }
+  };
+  
+  const handleCapLinesClick = () => {
+    if(text.length>0) {
+
+      let arr = text.trim().split(".");
+      console.log(arr)
+      let newText = "";
+  
+      // if there is space at end of string, word[0] becomes undefined
+      arr.forEach((word, index) => {
+        // word[0] will be uppercase, rest alphabets will be lowercase, plus space
+        newText += word.trim().charAt(0).toUpperCase() + word.slice(1).toLowerCase() + ". ";
+      });
+      setText(newText.trim());
+      props.showAlert("Capitalized every word", "success");
     }
   };
 
@@ -49,8 +60,6 @@ export default function TextForm(props) {
       // text.setSelectionRange(0, 99999); /* For mobile devices */
       navigator.clipboard.writeText(text.trim());
       props.showAlert("Copied to clipboard", "success");
-    } else {
-      props.showAlert("Enter text first", "danger");
     }
   };
 
@@ -112,10 +121,16 @@ export default function TextForm(props) {
           lower
         </button>
         <button disabled={text.length===0}
+          className="btn btn-info mx-2 my-1"
+          onClick={handleCapLinesClick}
+        >
+          <b>Capitalize</b>
+        </button>
+        <button disabled={text.length===0}
           className="btn btn-warning mx-2 my-1"
           onClick={handleCapitalizeClick}
         >
-          <b>Capitalize</b>
+          <b>Capital Each Word</b>
         </button>
         <button disabled={text.length===0}
           className="btn btn-secondary mx-2 my-1"
