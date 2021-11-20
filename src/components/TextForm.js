@@ -6,7 +6,7 @@ export default function TextForm(props) {
   const handleUpperClick = () => {
     // console.log("uppercase clicked!\nTEXT:: " + text);
     if (text.length>0) {
-      let newText = text.toUpperCase();
+      let newText = text.trim().toUpperCase();
       setText(newText);
       props.showAlert("Converted to Uppercase", "success");
     } else {
@@ -17,7 +17,7 @@ export default function TextForm(props) {
   const handleLowerClick = () => {
     if (text.length>0) {
       
-      let newText = text.toLowerCase();
+      let newText = text.trim().toLowerCase();
       setText(newText);
       props.showAlert("Converted to Lowercase", "success");
     } else {
@@ -28,7 +28,7 @@ export default function TextForm(props) {
   const handleCapitalizeClick = () => {
     if(text.length>0) {
 
-      let arr = text.split(" ");
+      let arr = text.trim().split(" ");
       let newText = "";
   
       // if there is space at end of string, word[0] becomes undefined
@@ -47,7 +47,7 @@ export default function TextForm(props) {
     if (text.length>0) {
       // text.select();
       // text.setSelectionRange(0, 99999); /* For mobile devices */
-      navigator.clipboard.writeText(text);
+      navigator.clipboard.writeText(text.trim());
       props.showAlert("Copied to clipboard", "success");
     } else {
       props.showAlert("Enter text first", "danger");
@@ -67,11 +67,24 @@ export default function TextForm(props) {
   return (
     <>
       {/* in style= '{'--first curly for JS '{' --second curly for OBJECT }} */}
-      <div
-        className="container"
-        style={{ color: props.mode === "light" ? "black" : "white" }}
-      >
-        <h2>{props.heading}</h2>
+      <div className="container" style={{ color: props.mode === "light" ? "black" : "white" }}>
+        <div className="row mb-2">
+          <div className="col-12 col-sm-6">
+            <h2>{props.heading}</h2>
+          </div>
+          <div className="col-12 col-sm-6">
+            <h2 className={`font-monospace text-${props.mode === "light" ? "primary" : "warning"}`}>
+              {text
+                  .trim()
+                  .split(" ")
+                  .filter(function (element) {
+                    return element.length !== 0;
+                  }).length
+              }{" "}
+              words | {text.length} characters
+            </h2>
+          </div>
+        </div>
         <div className="mb-3">
           <textarea
             className="form-control"
@@ -86,52 +99,41 @@ export default function TextForm(props) {
             }}
           ></textarea>
         </div>
-        <button
+        <button disabled={text.length===0}
           className="btn btn-primary mx-2 my-1"
           onClick={handleUpperClick}
         >
           UPPER
         </button>
-        <button
+        <button disabled={text.length===0}
           className="btn btn-success mx-2 my-1"
           onClick={handleLowerClick}
         >
           lower
         </button>
-        <button
+        <button disabled={text.length===0}
           className="btn btn-warning mx-2 my-1"
           onClick={handleCapitalizeClick}
         >
           <b>Capitalize</b>
         </button>
-        <button
+        <button disabled={text.length===0}
           className="btn btn-secondary mx-2 my-1"
           onClick={handleCopyClick}
         >
           Copy
         </button>
-        <button className="btn btn-dark mx-2 my-1" onClick={handleClearClick}>
+        <button disabled={text.length===0} className="btn btn-dark mx-2 my-1" onClick={handleClearClick}>
           Clear
         </button>
-        <h2 className="my-3">Your text Summary</h2>
+        <h3 className="my-3">Your text Summary</h3>
         <p>
-          {/* {text.length>0? text.split(" ").length : '0'} words  */}
-          {
-            text
-              .trim()
-              .split(" ")
-              .filter(function (element) {
-                return element.length !== 0;
-              }).length
-          }{" "}
-          words &amp; {text.length} characters
-          <br />
-          {text
+          {(text
             .trim()
             .split(" ")
             .filter(function (element) {
               return element !== "";
-            }).length * 0.008}{" "}
+            }).length * 0.008).toPrecision(3)}{" "}
           Minutes read
         </p>
         <h3>Preview</h3>
