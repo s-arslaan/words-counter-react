@@ -20,7 +20,7 @@ export default function TextForm(props) {
     }
   };
 
-  const handleCamelClick = () => {
+  const handleTitleCaseClick = () => {
     if(text.length>0) {
 
       let arr = text.trim().split(/\s+/);
@@ -32,30 +32,21 @@ export default function TextForm(props) {
         newText += word[0].toUpperCase() + word.slice(1).toLowerCase() + " ";
       });
       setText(newText.trim());
-      props.showAlert("Camel Cased Sucessfully", "success");
+      props.showAlert("Title Cased Sucessfully", "success");
     }
   };
   
   const handleCapitalizeClick = () => {
     if(text.length>0) {
-
-      let arr = text.trim().split(".");
-      let newText = "";
-  
-      // if there is space at end of string, word[0] becomes undefined
-      arr.forEach((word, index) => {
-        // word[0] will be uppercase, rest alphabets will be lowercase, plus space
-        newText += word.trim().charAt(0).toUpperCase() + word.slice(1).toLowerCase() + ". ";
-      });
+      // eslint-disable-next-line
+      let newText = text.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g,(c)=>c.toUpperCase());
       setText(newText.trim());
-      props.showAlert("Title Cased", "success");
+      props.showAlert("Capitalized", "success");
     }
   };
 
   const handleCopyClick = () => {
     if (text.length>0) {
-      // text.select();
-      // text.setSelectionRange(0, 99999); /* For mobile devices */
       navigator.clipboard.writeText(text.trim());
       props.showAlert("Copied to clipboard", "success");
     }
@@ -125,7 +116,7 @@ export default function TextForm(props) {
         </button>
         <button disabled={text.length===0}
           className="btn btn-warning mx-2 my-1"
-          onClick={handleCamelClick}
+          onClick={handleTitleCaseClick}
         >
           <b>Title Case</b>
         </button>
