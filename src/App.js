@@ -9,7 +9,6 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 function App() {
   const [mode, setMode] = useState("light"); // dark mode is enabled or not
   const [alert, setAlert] = useState(null);
-  const [active, setActive] = useState("home")
 
   const showAlert = (message, type) => {
     setAlert({
@@ -35,18 +34,10 @@ function App() {
     }
   };
 
-  const activeToggle = () => {
-    if (active==='home') {
-      setActive('about');
-    } else {
-      setActive('home');
-    }
-  }
-
   return (
     <>
       <Router>
-        <Navbar title="WordApp" aboutText="About Us" mode={mode} toggleMode={toggleMode} active={active} activeToggle={activeToggle} />
+        <Navbar title="WordApp" aboutText="About Us" mode={mode} toggleMode={toggleMode} />
         <div className="container my-3">
           <Alert alert={alert} />
           <Routes>
