@@ -20,7 +20,7 @@ export default function Navbar(props) {
       className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}
     >
       <div className="container-fluid">
-        <Link className="navbar-brand" onClick={()=>activeToggle('home')} to="/wordapp">
+        <Link className="navbar-brand" onClick={()=>activeToggle('home')} to="/">
           {props.title}
         </Link>
         <button
@@ -37,12 +37,12 @@ export default function Navbar(props) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className={`nav-link ${active === 'about' ? '':'active'}`} onClick={()=>activeToggle('home')} aria-current="page" to="/wordapp">
+              <Link className={`nav-link ${active === 'about' ? '':'active'}`} onClick={()=>activeToggle('home')} aria-current="page" to="/">
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${active === 'about' ? 'active':''}`} onClick={()=>activeToggle('about')} to="/wordapp/about">
+              <Link className={`nav-link ${active === 'about' ? 'active':''}`} onClick={()=>activeToggle('about')} to="/about">
                 {props.aboutText}
               </Link>
             </li>

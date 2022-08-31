@@ -41,10 +41,10 @@ function App() {
         <div className="container my-3">
           <Alert alert={alert} />
           <Routes>
-            <Route path="/wordapp">
+            <Route path="/">
               {/* use "exact" to match exact path or else react will match partially */}
-              <Route exact path="/wordapp/about" element={<About mode={mode} />} />
-              <Route exact path="/wordapp" element={<TextForm heading="Word Counter | Character Counter" mode={mode} showAlert={showAlert} />} />
+              <Route exact path="/about" element={<About mode={mode} />} />
+              <Route exact path="/" element={<TextForm heading="Word Counter | Character Counter" mode={mode} showAlert={showAlert} />} />
             </Route>
           </Routes>
         </div>
